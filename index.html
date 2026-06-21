@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Ching Yi Lam" />
+
+<meta name="date" content="2026-06-20" />
+
+<title>Project 4: Tableau Dashboard and Story Point</title>
+
+<script src="Loan-Default-Risk_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="Loan-Default-Risk_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Loan-Default-Risk_files/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="Loan-Default-Risk_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Loan-Default-Risk_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Loan-Default-Risk_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="Loan-Default-Risk_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="Loan-Default-Risk_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="Loan-Default-Risk_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="Loan-Default-Risk_files/navigation-1.1/tabsets.js"></script>
+<script src="Loan-Default-Risk_files/navigation-1.1/codefolding.js"></script>
+<script src="Loan-Default-Risk_files/navigation-1.1/sourceembed.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Project 4: Tableau Dashboard and Story
+Point</h1>
+<h4 class="author">Ching Yi Lam</h4>
+<h4 class="date">2026-06-20</h4>
+
+</div>
+
+
+<style type="text/css">
+/* ============ CSS Styling for Lecture Notes ============ */
+
+body {
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  color: #2d1b29;
+  background-color: #fdfafd;
+}
+
+#TOC::before {
+  content: "Table of Contents";
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
+  color: navy;
+  margin-bottom: 10px;
+}
+
+
+div#TOC li {     /* table of content  */
+    list-style:upper-roman;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+    /*font-weight: bold; */
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #6E3061;
+}
+
+
+h1.title {
+  font-size: 26px;
+  color: #6E3061;
+  text-align: left;
+}
+
+h4.author { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  /*font-family: "Times New Roman", Times, serif;*/
+  color: #6E3061;
+  text-align: left;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  /*font-family: "Times New Roman", Times, serif;*/
+  color: #6E3061;
+  text-align: left;
+}
+
+
+h1 {
+  color: #6E3061;
+  border-bottom: 3px solid #6E3061;
+  padding-bottom: 8px;
+  margin-top: 40px;
+  font-weight: bold;
+  font-size: 2.2rem;
+}
+
+h2 {
+  color: #6E3061;
+  border-left: 5px solid #6E3061;
+  padding-left: 12px;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+h3 {
+  color: #8b4a7d;
+  margin-top: 24px;
+  font-weight: bold;
+  font-size: 1.8m;
+}
+
+h4 {
+  color: #a05f92;
+  margin-top: 18px;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+code {
+  background-color: #f4edf3;
+  color: #4a2040;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.9em;
+  border: 1px solid #d4c0d1;
+}
+
+pre {
+  background-color: #f9f5f9;
+  border: 1px solid #d4c0d1;
+  border-left: 4px solid #6E3061;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+blockquote {
+  background-color: #f4edf3;
+  border-left: 4px solid #6E3061;
+  padding: 12px 18px;
+  margin: 16px 0;
+  border-radius: 0 6px 6px 0;
+  color: #4a2040;
+}
+
+.note-box {
+  background-color: #f0e6ee;
+  border: 1px solid #c49bb8;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+
+.note-box strong {
+  color: #6E3061;
+}
+
+.tip-box {
+  background-color: #e8f5e9;
+  border: 1px solid #81c784;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+
+.tip-box strong {
+  color: #2e7d32;
+}
+
+.warning-box {
+  background-color: #fff3e0;
+  border: 1px solid #ffb74d;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+
+.warning-box strong {
+  color: #e65100;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+table th {
+  background-color: #6E3061;
+  color: white;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #d4c0d1;
+}
+
+table tr:nth-child(even) td {
+  background-color: #faf5f9;
+}
+
+table tr:hover td {
+  background-color: #f0e6ee;
+}
+
+.toc {
+  background-color: #faf5f9;
+  border: 1px solid #d4c0d1;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.figure {
+  border: 1px solid #e0d1db;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(110, 48, 97, 0.08);
+}
+</style>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>This project analyzes a bank loan default dataset to explore factors
+associated with borrower default risk. The Tableau dashboard and story
+point provide an interactive visualization of borrower characteristics,
+loan types, credit score patterns, and default behavior.</p>
+</div>
+<div id="data-sources-and-description" class="section level1"
+number="2">
+<h1><span class="header-section-number">2</span> Data Sources and
+Description</h1>
+<p>The dataset used in this project is the Bank Loan Default Dataset,
+which contains information on borrower characteristics, loan attributes,
+and loan default outcomes. The dataset consists of 1,000 observations
+and includes variables such as credit score, loan amount, employment
+status, marital status, loan type indicators, checking account balance,
+savings account balance, and loan default status.</p>
+<p>The response variable is Default, where 1 indicates a borrower who
+defaulted on a loan and 0 indicates a borrower who did not default.
+Several explanatory variables were used to investigate factors
+associated with default risk, including credit score, marital status,
+loan amount, and loan type.</p>
+<p>To support the analysis, a derived variable called Credit Score Group
+was created by categorizing credit scores into Low, Medium, and High
+groups. This transformation enabled a clearer comparison of default
+rates across different credit risk categories and provided more
+interpretable insights for storytelling and dashboard visualization.</p>
+</div>
+<div id="narrative-of-the-story" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Narrative of the
+Story</h1>
+<p>This project explores factors associated with loan default risk using
+a bank loan dataset. The analysis begins with an overview of borrower
+characteristics, including credit score distribution and loan type
+distribution. Most borrowers have credit scores concentrated between 700
+and 850, while personal loans represent the largest loan category.</p>
+<p>The story then examines the relationship between credit score and
+loan default risk. The results show a strong association between credit
+score and default behavior. Borrowers with low credit scores exhibit a
+default rate of 91.0%, compared with 46.0% for medium credit score
+borrowers and only 14.4% for high credit score borrowers. This finding
+suggests that credit score is one of the strongest indicators of loan
+default risk.</p>
+<p>Next, the analysis explores the relationship between loan amount and
+credit score using a scatter plot. The visualization shows that
+borrowers with lower credit scores are more frequently associated with
+default cases, while borrowers with higher credit scores are
+concentrated in the non-default group.</p>
+<p>Finally, marital status is examined as an additional borrower
+characteristic. Single borrowers have a higher default rate (34.1%) than
+married borrowers (26.6%), suggesting that borrower demographics may
+also provide useful information when assessing repayment risk.</p>
+<p>The analysis demonstrates that credit score plays the most important
+role in predicting loan default risk, while borrower characteristics and
+loan attributes provide additional context for risk assessment.</p>
+</div>
+<div id="interactive-tableau-dashboard" class="section level1"
+number="4">
+<h1><span class="header-section-number">4</span> Interactive Tableau
+Dashboard</h1>
+<table>
+<tr>
+<td>
+<div id="viz1781928750227" class="tableauPlaceholder"
+style="position: relative">
+<noscript>
+<a href='#'><img alt='Borrower Profile Overview ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;BorrowerProfileOverview2&#47;BorrowerProfileOverview&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" style="display:none;">
+<p><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+<param name='embed_code_version' value='3' />
+<param name='site_root' value='' />
+<param name='name' value='BorrowerProfileOverview2&#47;BorrowerProfileOverview' />
+<param name='tabs' value='no' /> <param name='toolbar' value='yes' />
+<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;BorrowerProfileOverview2&#47;BorrowerProfileOverview&#47;1.png' />
+<param name='animate_transition' value='yes' />
+<param name='display_static_image' value='yes' />
+<param name='display_spinner' value='yes' />
+<param name='display_overlay' value='yes' />
+<param name='display_count' value='yes' />
+<param name='language' value='zh-TW' /></p>
+</object>
+</div>
+<script type='text/javascript'>                    
+    var divElement = document.getElementById('viz1781928750227');                    
+    var vizElement = divElement.getElementsByTagName('object')[0];                                   
+        vizElement.style.width='1016px';vizElement.style.height='991px';                    
+    var scriptElement = document.createElement('script');                                            
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                  
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                    
+    </script>
+</td>
+</tr>
+</table>
+</div>
+<div id="tableau-story-point" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Tableau Story
+Point</h1>
+<div id="tableau-story-point-1-credit-score-and-default-risk"
+class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Tableau Story Point
+1: Credit Score and Default Risk</h2>
+<table>
+<tr>
+<td>
+<div id="viz1782001457012" class="tableauPlaceholder"
+style="position: relative">
+<noscript>
+<a href='#'><img alt='Credit Score and Default Risk ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cr&#47;CreditScoreandDefaultRisk&#47;CreditScoreandDefaultRisk&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+<param name='embed_code_version' value='3' />
+<param name='site_root' value='' />
+<param name='name' value='CreditScoreandDefaultRisk&#47;CreditScoreandDefaultRisk' />
+<param name='tabs' value='no' /><param name='toolbar' value='yes' />
+<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cr&#47;CreditScoreandDefaultRisk&#47;CreditScoreandDefaultRisk&#47;1.png' />
+<param name='animate_transition' value='yes' />
+<param name='display_static_image' value='yes' />
+<param name='display_spinner' value='yes' />
+<param name='display_overlay' value='yes' />
+<param name='display_count' value='yes' />
+<param name='language' value='zh-TW' />
+</object>
+</div>
+<script type='text/javascript'>                    
+    var divElement = document.getElementById('viz1782001457012');                    
+    var vizElement = divElement.getElementsByTagName('object')[0];                    
+        vizElement.style.width='1016px';vizElement.style.height='991px';                    
+    var scriptElement = document.createElement('script');                    
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+    </script>
+</td>
+</tr>
+</table>
+</div>
+<div
+id="tableau-story-point-2-relationship-between-credit-score-and-loan-amount"
+class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Tableau Story Point
+2: Relationship Between Credit Score and Loan Amount</h2>
+<table>
+<tr>
+<td>
+<div id="viz1782001728074" class="tableauPlaceholder"
+style="position: relative">
+<noscript>
+<a href='#'><img alt='Relationship Between Credit Score and Loan Amount ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;RelationshipBetweenCreditScoreandLoanAmount&#47;RelationshipBetweenCreditScoreandLoanAmount&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+<param name='embed_code_version' value='3' />
+<param name='site_root' value='' />
+<param name='name' value='RelationshipBetweenCreditScoreandLoanAmount&#47;RelationshipBetweenCreditScoreandLoanAmount' />
+<param name='tabs' value='no' /> <param name='toolbar' value='yes' />
+<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;RelationshipBetweenCreditScoreandLoanAmount&#47;RelationshipBetweenCreditScoreandLoanAmount&#47;1.png' />
+<param name='animate_transition' value='yes' />
+<param name='display_static_image' value='yes' />
+<param name='display_spinner' value='yes' />
+<param name='display_overlay' value='yes' />
+<param name='display_count' value='yes' />
+<param name='language' value='zh-TW' />
+</object>
+</div>
+<script type='text/javascript'>                    
+    var divElement = document.getElementById('viz1782001728074');                    
+    var vizElement = divElement.getElementsByTagName('object')[0];                    
+        vizElement.style.width='1016px';vizElement.style.height='991px';                    
+    var scriptElement = document.createElement('script');                    
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+    </script>
+</td>
+</tr>
+</table>
+</div>
+<div id="tableau-story-point-3-marital-status-and-default-risk"
+class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Tableau Story Point
+3: Marital Status and Default Risk</h2>
+<table>
+<tr>
+<td>
+<div id="viz1782001872342" class="tableauPlaceholder"
+style="position: relative">
+<noscript>
+<a href='#'><img alt='Marital Status and Default Risk ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ma&#47;MaritalStatusandDefaultRisk&#47;MaritalStatusandDefaultRisk&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+<param name='embed_code_version' value='3' />
+<param name='site_root' value='' />
+<param name='name' value='MaritalStatusandDefaultRisk&#47;MaritalStatusandDefaultRisk' />
+<param name='tabs' value='no' /> <param name='toolbar' value='yes' />
+<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ma&#47;MaritalStatusandDefaultRisk&#47;MaritalStatusandDefaultRisk&#47;1.png' />
+<param name='animate_transition' value='yes' />
+<param name='display_static_image' value='yes' />
+<param name='display_spinner' value='yes' />
+<param name='display_overlay' value='yes' />
+<param name='display_count' value='yes' />
+<param name='language' value='zh-TW' />
+</object>
+</div>
+<script type='text/javascript'>                    
+    var divElement = document.getElementById('viz1782001872342');                    
+    var vizElement = divElement.getElementsByTagName('object')[0];                    
+        vizElement.style.width='1016px';vizElement.style.height='991px';                    
+    var scriptElement = document.createElement('script');                    
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+    </script>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="key-findings" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Key Findings</h1>
+<p>The dashboard suggests that credit score is strongly associated with
+loan default risk. Borrowers with low credit scores have a much higher
+default rate than borrowers with medium or high credit scores. Single
+borrowers also show a higher default rate than married borrowers. In
+addition, personal loans are the most common loan type in the
+dataset.</p>
+</div>
+<div id="recommendations" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Recommendations</h1>
+<p>Based on the dashboard analysis, credit score appears to be the
+strongest predictor of loan default risk. Borrowers in the low credit
+score group exhibit a substantially higher default rate (91.0%) compared
+with medium (46.0%) and high credit score borrowers (14.4%). Therefore,
+financial institutions should prioritize credit score as a key factor
+during the loan approval and risk assessment process.</p>
+<p>For borrowers with low credit scores, lenders may consider
+implementing stricter lending requirements, such as lower loan limits,
+higher collateral requirements, or enhanced credit verification
+procedures. Additional monitoring and financial counseling programs may
+also help reduce the likelihood of default among high-risk
+borrowers.</p>
+<p>The analysis also indicates that single borrowers have a higher
+default rate (34.1%) than married borrowers (26.6%). While marital
+status alone should not determine lending decisions, it may provide
+useful context when combined with other risk indicators. Lenders could
+incorporate demographic and behavioral factors into a broader risk
+assessment framework to improve predictive accuracy.</p>
+<p>In addition, personal loans represent the largest loan category in
+the dataset. Financial institutions should pay particular attention to
+personal loan portfolios and regularly monitor borrower repayment
+behavior to identify potential risks early.</p>
+<p>In conclusion, lenders should adopt a comprehensive risk management
+strategy that combines credit score, borrower characteristics, and loan
+attributes to improve loan performance and reduce default risk.</p>
+</div>
+<div id="limitations" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Limitations</h1>
+<p>Several limitations should be considered when interpreting the
+results. First, the dataset contains only a limited set of borrower
+characteristics, and other potentially important factors such as income,
+employment stability, debt-to-income ratio, and repayment history are
+not available. Second, the analysis is exploratory and does not
+establish causal relationships between borrower characteristics and loan
+default behavior. Finally, the findings are based on a single dataset
+and may not generalize to all lending environments or borrower
+populations.</p>
+<p>Future studies could incorporate additional financial variables and
+predictive modeling techniques to improve the understanding of loan
+default risk and support more accurate lending decisions.</p>
+</div>
+<div id="conclusion" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Conclusion</h1>
+<p>This Tableau dashboard and story point demonstrate how interactive
+data visualization can support loan default risk analysis. The results
+suggest that credit score is an important factor in identifying default
+risk, while borrower characteristics such as marital status and loan
+type provide additional context for understanding repayment
+behavior.</p>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlByb2plY3QgNDogVGFibGVhdSBEYXNoYm9hcmQgYW5kIFN0b3J5IFBvaW50Ig0KYXV0aG9yOiAiQ2hpbmcgWWkgTGFtIg0KZGF0ZTogImByIFN5cy5EYXRlKClgIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDogDQogICAgdGhlbWU6IHlldGkNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogNA0KICAgIHRvY19mbG9hdDogeWVzDQogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMNCiAgICB0b2NfY29sbGFwc2VkOiB5ZXMNCiAgICBjb2RlX2ZvbGRpbmc6IGhpZGUNCiAgICBjb2RlX2Rvd25sb2FkOiB5ZXMNCiAgICBzbW9vdGhfc2Nyb2xsOiB5ZXMNCiAgICBoaWdobGlnaHQ6IHRhbmdvDQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQotLS0NCg0KYGBge2NzcyBlY2hvID0gRkFMU0V9DQovKiA9PT09PT09PT09PT0gQ1NTIFN0eWxpbmcgZm9yIExlY3R1cmUgTm90ZXMgPT09PT09PT09PT09ICovDQoNCmJvZHkgew0KICBmb250LWZhbWlseTogJ1NlZ29lIFVJJywgJ0ludGVyJywgc3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmOw0KICBsaW5lLWhlaWdodDogMS43Ow0KICBjb2xvcjogIzJkMWIyOTsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2ZkZmFmZDsNCn0NCg0KI1RPQzo6YmVmb3JlIHsNCiAgY29udGVudDogIlRhYmxlIG9mIENvbnRlbnRzIjsNCiAgZm9udC13ZWlnaHQ6IGJvbGQ7DQogIGZvbnQtc2l6ZTogMS4yZW07DQogIGRpc3BsYXk6IGJsb2NrOw0KICBjb2xvcjogbmF2eTsNCiAgbWFyZ2luLWJvdHRvbTogMTBweDsNCn0NCg0KDQpkaXYjVE9DIGxpIHsgICAgIC8qIHRhYmxlIG9mIGNvbnRlbnQgICovDQogICAgbGlzdC1zdHlsZTp1cHBlci1yb21hbjsNCiAgICBiYWNrZ3JvdW5kLWltYWdlOm5vbmU7DQogICAgYmFja2dyb3VuZC1yZXBlYXQ6bm9uZTsNCiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOjA7DQogICAgLypmb250LXdlaWdodDogYm9sZDsgKi8NCiAgICBmb250LXNpemU6IDEuMWVtOw0KICAgIGZvbnQtd2VpZ2h0OiA1MDA7DQogICAgY29sb3I6ICM2RTMwNjE7DQp9DQoNCg0KaDEudGl0bGUgew0KICBmb250LXNpemU6IDI2cHg7DQogIGNvbG9yOiAjNkUzMDYxOw0KICB0ZXh0LWFsaWduOiBsZWZ0Ow0KfQ0KDQpoNC5hdXRob3IgeyAvKiBIZWFkZXIgNCAtIGFuZCB0aGUgYXV0aG9yIGFuZCBkYXRhIGhlYWRlcnMgdXNlIHRoaXMgdG9vICAqLw0KICBmb250LXNpemU6IDE4cHg7DQogIC8qZm9udC1mYW1pbHk6ICJUaW1lcyBOZXcgUm9tYW4iLCBUaW1lcywgc2VyaWY7Ki8NCiAgY29sb3I6ICM2RTMwNjE7DQogIHRleHQtYWxpZ246IGxlZnQ7DQp9DQpoNC5kYXRlIHsgLyogSGVhZGVyIDQgLSBhbmQgdGhlIGF1dGhvciBhbmQgZGF0YSBoZWFkZXJzIHVzZSB0aGlzIHRvbyAgKi8NCiAgZm9udC1zaXplOiAxOHB4Ow0KICAvKmZvbnQtZmFtaWx5OiAiVGltZXMgTmV3IFJvbWFuIiwgVGltZXMsIHNlcmlmOyovDQogIGNvbG9yOiAjNkUzMDYxOw0KICB0ZXh0LWFsaWduOiBsZWZ0Ow0KfQ0KDQoNCmgxIHsNCiAgY29sb3I6ICM2RTMwNjE7DQogIGJvcmRlci1ib3R0b206IDNweCBzb2xpZCAjNkUzMDYxOw0KICBwYWRkaW5nLWJvdHRvbTogOHB4Ow0KICBtYXJnaW4tdG9wOiA0MHB4Ow0KICBmb250LXdlaWdodDogYm9sZDsNCiAgZm9udC1zaXplOiAyLjJyZW07DQp9DQoNCmgyIHsNCiAgY29sb3I6ICM2RTMwNjE7DQogIGJvcmRlci1sZWZ0OiA1cHggc29saWQgIzZFMzA2MTsNCiAgcGFkZGluZy1sZWZ0OiAxMnB4Ow0KICBtYXJnaW4tdG9wOiAzMHB4Ow0KICBmb250LXdlaWdodDogYm9sZDsNCiAgZm9udC1zaXplOiAxLjhyZW07DQp9DQoNCmgzIHsNCiAgY29sb3I6ICM4YjRhN2Q7DQogIG1hcmdpbi10b3A6IDI0cHg7DQogIGZvbnQtd2VpZ2h0OiBib2xkOw0KICBmb250LXNpemU6IDEuOG07DQp9DQoNCmg0IHsNCiAgY29sb3I6ICNhMDVmOTI7DQogIG1hcmdpbi10b3A6IDE4cHg7DQogIGZvbnQtd2VpZ2h0OiBib2xkOw0KICBmb250LXNpemU6IDEuNHJlbTsNCn0NCg0KY29kZSB7DQogIGJhY2tncm91bmQtY29sb3I6ICNmNGVkZjM7DQogIGNvbG9yOiAjNGEyMDQwOw0KICBwYWRkaW5nOiAycHggNnB4Ow0KICBib3JkZXItcmFkaXVzOiA0cHg7DQogIGZvbnQtZmFtaWx5OiAnRmlyYSBDb2RlJywgJ0pldEJyYWlucyBNb25vJywgJ0NvbnNvbGFzJywgbW9ub3NwYWNlOw0KICBmb250LXNpemU6IDAuOWVtOw0KICBib3JkZXI6IDFweCBzb2xpZCAjZDRjMGQxOw0KfQ0KDQpwcmUgew0KICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjlmNWY5Ow0KICBib3JkZXI6IDFweCBzb2xpZCAjZDRjMGQxOw0KICBib3JkZXItbGVmdDogNHB4IHNvbGlkICM2RTMwNjE7DQogIGJvcmRlci1yYWRpdXM6IDZweDsNCiAgcGFkZGluZzogMTRweDsNCn0NCg0KcHJlIGNvZGUgew0KICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsNCiAgYm9yZGVyOiBub25lOw0KICBwYWRkaW5nOiAwOw0KfQ0KDQpibG9ja3F1b3RlIHsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZWRmMzsNCiAgYm9yZGVyLWxlZnQ6IDRweCBzb2xpZCAjNkUzMDYxOw0KICBwYWRkaW5nOiAxMnB4IDE4cHg7DQogIG1hcmdpbjogMTZweCAwOw0KICBib3JkZXItcmFkaXVzOiAwIDZweCA2cHggMDsNCiAgY29sb3I6ICM0YTIwNDA7DQp9DQoNCi5ub3RlLWJveCB7DQogIGJhY2tncm91bmQtY29sb3I6ICNmMGU2ZWU7DQogIGJvcmRlcjogMXB4IHNvbGlkICNjNDliYjg7DQogIGJvcmRlci1yYWRpdXM6IDhweDsNCiAgcGFkZGluZzogMTZweCAyMHB4Ow0KICBtYXJnaW46IDE4cHggMDsNCn0NCg0KLm5vdGUtYm94IHN0cm9uZyB7DQogIGNvbG9yOiAjNkUzMDYxOw0KfQ0KDQoudGlwLWJveCB7DQogIGJhY2tncm91bmQtY29sb3I6ICNlOGY1ZTk7DQogIGJvcmRlcjogMXB4IHNvbGlkICM4MWM3ODQ7DQogIGJvcmRlci1yYWRpdXM6IDhweDsNCiAgcGFkZGluZzogMTZweCAyMHB4Ow0KICBtYXJnaW46IDE4cHggMDsNCn0NCg0KLnRpcC1ib3ggc3Ryb25nIHsNCiAgY29sb3I6ICMyZTdkMzI7DQp9DQoNCi53YXJuaW5nLWJveCB7DQogIGJhY2tncm91bmQtY29sb3I6ICNmZmYzZTA7DQogIGJvcmRlcjogMXB4IHNvbGlkICNmZmI3NGQ7DQogIGJvcmRlci1yYWRpdXM6IDhweDsNCiAgcGFkZGluZzogMTZweCAyMHB4Ow0KICBtYXJnaW46IDE4cHggMDsNCn0NCg0KLndhcm5pbmctYm94IHN0cm9uZyB7DQogIGNvbG9yOiAjZTY1MTAwOw0KfQ0KDQp0YWJsZSB7DQogIHdpZHRoOiAxMDAlOw0KICBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOw0KICBtYXJnaW46IDE2cHggMDsNCn0NCg0KdGFibGUgdGggew0KICBiYWNrZ3JvdW5kLWNvbG9yOiAjNkUzMDYxOw0KICBjb2xvcjogd2hpdGU7DQogIHBhZGRpbmc6IDEwcHggMTJweDsNCiAgdGV4dC1hbGlnbjogbGVmdDsNCiAgZm9udC13ZWlnaHQ6IDYwMDsNCn0NCg0KdGFibGUgdGQgew0KICBwYWRkaW5nOiA4cHggMTJweDsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNkNGMwZDE7DQp9DQoNCnRhYmxlIHRyOm50aC1jaGlsZChldmVuKSB0ZCB7DQogIGJhY2tncm91bmQtY29sb3I6ICNmYWY1Zjk7DQp9DQoNCnRhYmxlIHRyOmhvdmVyIHRkIHsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZTZlZTsNCn0NCg0KLnRvYyB7DQogIGJhY2tncm91bmQtY29sb3I6ICNmYWY1Zjk7DQogIGJvcmRlcjogMXB4IHNvbGlkICNkNGMwZDE7DQogIGJvcmRlci1yYWRpdXM6IDhweDsNCiAgcGFkZGluZzogMTZweCAyMHB4Ow0KICBtYXJnaW4tYm90dG9tOiAyNHB4Ow0KfQ0KDQouZmlndXJlIHsNCiAgYm9yZGVyOiAxcHggc29saWQgI2UwZDFkYjsNCiAgYm9yZGVyLXJhZGl1czogOHB4Ow0KICBwYWRkaW5nOiA4cHg7DQogIG1hcmdpbjogMTZweCAwOw0KICBib3gtc2hhZG93OiAwIDJweCA4cHggcmdiYSgxMTAsIDQ4LCA5NywgMC4wOCk7DQp9DQpgYGANCg0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLCAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICB3YXJuaW5nID0gRkFMU0UsICAgDQogICAgICAgICAgICAgICAgICAgICAgcmVzdWx0ID0gVFJVRSwgICANCiAgICAgICAgICAgICAgICAgICAgICBtZXNzYWdlID0gRkFMU0UsDQogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9IE5BKQ0KYGBgDQoNCiMgSW50cm9kdWN0aW9uDQoNClRoaXMgcHJvamVjdCBhbmFseXplcyBhIGJhbmsgbG9hbiBkZWZhdWx0IGRhdGFzZXQgdG8gZXhwbG9yZSBmYWN0b3JzIGFzc29jaWF0ZWQgd2l0aCBib3Jyb3dlciBkZWZhdWx0IHJpc2suIFRoZSBUYWJsZWF1IGRhc2hib2FyZCBhbmQgc3RvcnkgcG9pbnQgcHJvdmlkZSBhbiBpbnRlcmFjdGl2ZSB2aXN1YWxpemF0aW9uIG9mIGJvcnJvd2VyIGNoYXJhY3RlcmlzdGljcywgbG9hbiB0eXBlcywgY3JlZGl0IHNjb3JlIHBhdHRlcm5zLCBhbmQgZGVmYXVsdCBiZWhhdmlvci4NCg0KIyBEYXRhIFNvdXJjZXMgYW5kIERlc2NyaXB0aW9uDQoNClRoZSBkYXRhc2V0IHVzZWQgaW4gdGhpcyBwcm9qZWN0IGlzIHRoZSBCYW5rIExvYW4gRGVmYXVsdCBEYXRhc2V0LCB3aGljaCBjb250YWlucyBpbmZvcm1hdGlvbiBvbiBib3Jyb3dlciBjaGFyYWN0ZXJpc3RpY3MsIGxvYW4gYXR0cmlidXRlcywgYW5kIGxvYW4gZGVmYXVsdCBvdXRjb21lcy4gVGhlIGRhdGFzZXQgY29uc2lzdHMgb2YgMSwwMDAgb2JzZXJ2YXRpb25zIGFuZCBpbmNsdWRlcyB2YXJpYWJsZXMgc3VjaCBhcyBjcmVkaXQgc2NvcmUsIGxvYW4gYW1vdW50LCBlbXBsb3ltZW50IHN0YXR1cywgbWFyaXRhbCBzdGF0dXMsIGxvYW4gdHlwZSBpbmRpY2F0b3JzLCBjaGVja2luZyBhY2NvdW50IGJhbGFuY2UsIHNhdmluZ3MgYWNjb3VudCBiYWxhbmNlLCBhbmQgbG9hbiBkZWZhdWx0IHN0YXR1cy4NCg0KVGhlIHJlc3BvbnNlIHZhcmlhYmxlIGlzIERlZmF1bHQsIHdoZXJlIDEgaW5kaWNhdGVzIGEgYm9ycm93ZXIgd2hvIGRlZmF1bHRlZCBvbiBhIGxvYW4gYW5kIDAgaW5kaWNhdGVzIGEgYm9ycm93ZXIgd2hvIGRpZCBub3QgZGVmYXVsdC4gU2V2ZXJhbCBleHBsYW5hdG9yeSB2YXJpYWJsZXMgd2VyZSB1c2VkIHRvIGludmVzdGlnYXRlIGZhY3RvcnMgYXNzb2NpYXRlZCB3aXRoIGRlZmF1bHQgcmlzaywgaW5jbHVkaW5nIGNyZWRpdCBzY29yZSwgbWFyaXRhbCBzdGF0dXMsIGxvYW4gYW1vdW50LCBhbmQgbG9hbiB0eXBlLg0KDQpUbyBzdXBwb3J0IHRoZSBhbmFseXNpcywgYSBkZXJpdmVkIHZhcmlhYmxlIGNhbGxlZCBDcmVkaXQgU2NvcmUgR3JvdXAgd2FzIGNyZWF0ZWQgYnkgY2F0ZWdvcml6aW5nIGNyZWRpdCBzY29yZXMgaW50byBMb3csIE1lZGl1bSwgYW5kIEhpZ2ggZ3JvdXBzLiBUaGlzIHRyYW5zZm9ybWF0aW9uIGVuYWJsZWQgYSBjbGVhcmVyIGNvbXBhcmlzb24gb2YgZGVmYXVsdCByYXRlcyBhY3Jvc3MgZGlmZmVyZW50IGNyZWRpdCByaXNrIGNhdGVnb3JpZXMgYW5kIHByb3ZpZGVkIG1vcmUgaW50ZXJwcmV0YWJsZSBpbnNpZ2h0cyBmb3Igc3Rvcnl0ZWxsaW5nIGFuZCBkYXNoYm9hcmQgdmlzdWFsaXphdGlvbi4NCg0KIyBOYXJyYXRpdmUgb2YgdGhlIFN0b3J5DQoNClRoaXMgcHJvamVjdCBleHBsb3JlcyBmYWN0b3JzIGFzc29jaWF0ZWQgd2l0aCBsb2FuIGRlZmF1bHQgcmlzayB1c2luZyBhIGJhbmsgbG9hbiBkYXRhc2V0LiBUaGUgYW5hbHlzaXMgYmVnaW5zIHdpdGggYW4gb3ZlcnZpZXcgb2YgYm9ycm93ZXIgY2hhcmFjdGVyaXN0aWNzLCBpbmNsdWRpbmcgY3JlZGl0IHNjb3JlIGRpc3RyaWJ1dGlvbiBhbmQgbG9hbiB0eXBlIGRpc3RyaWJ1dGlvbi4gTW9zdCBib3Jyb3dlcnMgaGF2ZSBjcmVkaXQgc2NvcmVzIGNvbmNlbnRyYXRlZCBiZXR3ZWVuIDcwMCBhbmQgODUwLCB3aGlsZSBwZXJzb25hbCBsb2FucyByZXByZXNlbnQgdGhlIGxhcmdlc3QgbG9hbiBjYXRlZ29yeS4NCg0KVGhlIHN0b3J5IHRoZW4gZXhhbWluZXMgdGhlIHJlbGF0aW9uc2hpcCBiZXR3ZWVuIGNyZWRpdCBzY29yZSBhbmQgbG9hbiBkZWZhdWx0IHJpc2suIFRoZSByZXN1bHRzIHNob3cgYSBzdHJvbmcgYXNzb2NpYXRpb24gYmV0d2VlbiBjcmVkaXQgc2NvcmUgYW5kIGRlZmF1bHQgYmVoYXZpb3IuIEJvcnJvd2VycyB3aXRoIGxvdyBjcmVkaXQgc2NvcmVzIGV4aGliaXQgYSBkZWZhdWx0IHJhdGUgb2YgOTEuMCUsIGNvbXBhcmVkIHdpdGggNDYuMCUgZm9yIG1lZGl1bSBjcmVkaXQgc2NvcmUgYm9ycm93ZXJzIGFuZCBvbmx5IDE0LjQlIGZvciBoaWdoIGNyZWRpdCBzY29yZSBib3Jyb3dlcnMuIFRoaXMgZmluZGluZyBzdWdnZXN0cyB0aGF0IGNyZWRpdCBzY29yZSBpcyBvbmUgb2YgdGhlIHN0cm9uZ2VzdCBpbmRpY2F0b3JzIG9mIGxvYW4gZGVmYXVsdCByaXNrLg0KDQpOZXh0LCB0aGUgYW5hbHlzaXMgZXhwbG9yZXMgdGhlIHJlbGF0aW9uc2hpcCBiZXR3ZWVuIGxvYW4gYW1vdW50IGFuZCBjcmVkaXQgc2NvcmUgdXNpbmcgYSBzY2F0dGVyIHBsb3QuIFRoZSB2aXN1YWxpemF0aW9uIHNob3dzIHRoYXQgYm9ycm93ZXJzIHdpdGggbG93ZXIgY3JlZGl0IHNjb3JlcyBhcmUgbW9yZSBmcmVxdWVudGx5IGFzc29jaWF0ZWQgd2l0aCBkZWZhdWx0IGNhc2VzLCB3aGlsZSBib3Jyb3dlcnMgd2l0aCBoaWdoZXIgY3JlZGl0IHNjb3JlcyBhcmUgY29uY2VudHJhdGVkIGluIHRoZSBub24tZGVmYXVsdCBncm91cC4NCg0KRmluYWxseSwgbWFyaXRhbCBzdGF0dXMgaXMgZXhhbWluZWQgYXMgYW4gYWRkaXRpb25hbCBib3Jyb3dlciBjaGFyYWN0ZXJpc3RpYy4gU2luZ2xlIGJvcnJvd2VycyBoYXZlIGEgaGlnaGVyIGRlZmF1bHQgcmF0ZSAoMzQuMSUpIHRoYW4gbWFycmllZCBib3Jyb3dlcnMgKDI2LjYlKSwgc3VnZ2VzdGluZyB0aGF0IGJvcnJvd2VyIGRlbW9ncmFwaGljcyBtYXkgYWxzbyBwcm92aWRlIHVzZWZ1bCBpbmZvcm1hdGlvbiB3aGVuIGFzc2Vzc2luZyByZXBheW1lbnQgcmlzay4NCg0KVGhlIGFuYWx5c2lzIGRlbW9uc3RyYXRlcyB0aGF0IGNyZWRpdCBzY29yZSBwbGF5cyB0aGUgbW9zdCBpbXBvcnRhbnQgcm9sZSBpbiBwcmVkaWN0aW5nIGxvYW4gZGVmYXVsdCByaXNrLCB3aGlsZSBib3Jyb3dlciBjaGFyYWN0ZXJpc3RpY3MgYW5kIGxvYW4gYXR0cmlidXRlcyBwcm92aWRlIGFkZGl0aW9uYWwgY29udGV4dCBmb3IgcmlzayBhc3Nlc3NtZW50Lg0KDQojIEludGVyYWN0aXZlIFRhYmxlYXUgRGFzaGJvYXJkDQoNCjx0YWJsZT48dHI+PHRkPg0KDQo8ZGl2IGNsYXNzPSd0YWJsZWF1UGxhY2Vob2xkZXInIGlkPSd2aXoxNzgxOTI4NzUwMjI3JyBzdHlsZT0ncG9zaXRpb246IHJlbGF0aXZlJz4NCg0KPG5vc2NyaXB0Pg0KPGEgaHJlZj0nIyc+PGltZyBhbHQ9J0JvcnJvd2VyIFByb2ZpbGUgT3ZlcnZpZXcgJyBzcmM9J2h0dHBzOiYjNDc7JiM0NztwdWJsaWMudGFibGVhdS5jb20mIzQ3O3N0YXRpYyYjNDc7aW1hZ2VzJiM0NztCbyYjNDc7Qm9ycm93ZXJQcm9maWxlT3ZlcnZpZXcyJiM0NztCb3Jyb3dlclByb2ZpbGVPdmVydmlldyYjNDc7MV9yc3MucG5nJyBzdHlsZT0nYm9yZGVyOiBub25lJyAvPjwvYT4NCjwvbm9zY3JpcHQ+DQoNCjxvYmplY3QgY2xhc3M9J3RhYmxlYXVWaXonICBzdHlsZT0nZGlzcGxheTpub25lOyc+DQogIDxwYXJhbSBuYW1lPSdob3N0X3VybCcgdmFsdWU9J2h0dHBzJTNBJTJGJTJGcHVibGljLnRhYmxlYXUuY29tJTJGJyAvPg0KICA8cGFyYW0gbmFtZT0nZW1iZWRfY29kZV92ZXJzaW9uJyB2YWx1ZT0nMycgLz4gDQogIDxwYXJhbSBuYW1lPSdzaXRlX3Jvb3QnIHZhbHVlPScnIC8+DQogIDxwYXJhbSBuYW1lPSduYW1lJyB2YWx1ZT0nQm9ycm93ZXJQcm9maWxlT3ZlcnZpZXcyJiM0NztCb3Jyb3dlclByb2ZpbGVPdmVydmlldycgLz4NCiAgPHBhcmFtIG5hbWU9J3RhYnMnIHZhbHVlPSdubycgLz4NCiAgPHBhcmFtIG5hbWU9J3Rvb2xiYXInIHZhbHVlPSd5ZXMnIC8+DQogIDxwYXJhbSBuYW1lPSdzdGF0aWNfaW1hZ2UnIHZhbHVlPSdodHRwczomIzQ3OyYjNDc7cHVibGljLnRhYmxlYXUuY29tJiM0NztzdGF0aWMmIzQ3O2ltYWdlcyYjNDc7Qm8mIzQ3O0JvcnJvd2VyUHJvZmlsZU92ZXJ2aWV3MiYjNDc7Qm9ycm93ZXJQcm9maWxlT3ZlcnZpZXcmIzQ3OzEucG5nJyAvPiANCiAgICA8cGFyYW0gbmFtZT0nYW5pbWF0ZV90cmFuc2l0aW9uJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X3N0YXRpY19pbWFnZScgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nZGlzcGxheV9zcGlubmVyJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X292ZXJsYXknIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2Rpc3BsYXlfY291bnQnIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2xhbmd1YWdlJyB2YWx1ZT0nemgtVFcnIC8+DQogIA0KIDwvb2JqZWN0Pg0KPC9kaXY+ICAgICAgICAgICAgICAgIA0KDQo8c2NyaXB0IHR5cGU9J3RleHQvamF2YXNjcmlwdCc+ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgZGl2RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd2aXoxNzgxOTI4NzUwMjI3Jyk7ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgdml6RWxlbWVudCA9IGRpdkVsZW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ29iamVjdCcpWzBdOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgIHZpekVsZW1lbnQuc3R5bGUud2lkdGg9JzEwMTZweCc7dml6RWxlbWVudC5zdHlsZS5oZWlnaHQ9Jzk5MXB4JzsgICAgICAgICAgICAgICAgICAgIA0KICAgIHZhciBzY3JpcHRFbGVtZW50ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgc2NyaXB0RWxlbWVudC5zcmMgPSAnaHR0cHM6Ly9wdWJsaWMudGFibGVhdS5jb20vamF2YXNjcmlwdHMvYXBpL3Zpel92MS5qcyc7ICAgICAgICAgICAgICAgICAgDQogICAgICAgIHZpekVsZW1lbnQucGFyZW50Tm9kZS5pbnNlcnRCZWZvcmUoc2NyaXB0RWxlbWVudCwgdml6RWxlbWVudCk7ICAgICAgICAgICAgICAgICAgICANCiAgICA8L3NjcmlwdD4NCiAgICANCjwvdGQ+PC90cj48L3RhYmxlPg0KDQojIFRhYmxlYXUgU3RvcnkgUG9pbnQNCg0KIyMgVGFibGVhdSBTdG9yeSBQb2ludCAxOiBDcmVkaXQgU2NvcmUgYW5kIERlZmF1bHQgUmlzaw0KPHRhYmxlPjx0cj48dGQ+DQoNCjxkaXYgY2xhc3M9J3RhYmxlYXVQbGFjZWhvbGRlcicgaWQ9J3ZpejE3ODIwMDE0NTcwMTInIHN0eWxlPSdwb3NpdGlvbjogcmVsYXRpdmUnPg0KDQo8bm9zY3JpcHQ+DQo8YSBocmVmPScjJz48aW1nIGFsdD0nQ3JlZGl0IFNjb3JlIGFuZCBEZWZhdWx0IFJpc2sgJyBzcmM9J2h0dHBzOiYjNDc7JiM0NztwdWJsaWMudGFibGVhdS5jb20mIzQ3O3N0YXRpYyYjNDc7aW1hZ2VzJiM0NztDciYjNDc7Q3JlZGl0U2NvcmVhbmREZWZhdWx0UmlzayYjNDc7Q3JlZGl0U2NvcmVhbmREZWZhdWx0UmlzayYjNDc7MV9yc3MucG5nJyBzdHlsZT0nYm9yZGVyOiBub25lJyAvPjwvYT4NCjwvbm9zY3JpcHQ+DQoNCjxvYmplY3QgY2xhc3M9J3RhYmxlYXVWaXonICBzdHlsZT0nZGlzcGxheTpub25lOyc+DQogICAgPHBhcmFtIG5hbWU9J2hvc3RfdXJsJyB2YWx1ZT0naHR0cHMlM0ElMkYlMkZwdWJsaWMudGFibGVhdS5jb20lMkYnIC8+IA0KICAgIDxwYXJhbSBuYW1lPSdlbWJlZF9jb2RlX3ZlcnNpb24nIHZhbHVlPSczJyAvPiANCiAgICA8cGFyYW0gbmFtZT0nc2l0ZV9yb290JyB2YWx1ZT0nJyAvPg0KICAgIDxwYXJhbSBuYW1lPSduYW1lJyB2YWx1ZT0nQ3JlZGl0U2NvcmVhbmREZWZhdWx0UmlzayYjNDc7Q3JlZGl0U2NvcmVhbmREZWZhdWx0UmlzaycgLz4NCiAgICA8cGFyYW0gbmFtZT0ndGFicycgdmFsdWU9J25vJyAvPjxwYXJhbSBuYW1lPSd0b29sYmFyJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdzdGF0aWNfaW1hZ2UnIHZhbHVlPSdodHRwczomIzQ3OyYjNDc7cHVibGljLnRhYmxlYXUuY29tJiM0NztzdGF0aWMmIzQ3O2ltYWdlcyYjNDc7Q3ImIzQ3O0NyZWRpdFNjb3JlYW5kRGVmYXVsdFJpc2smIzQ3O0NyZWRpdFNjb3JlYW5kRGVmYXVsdFJpc2smIzQ3OzEucG5nJyAvPiANCiAgICA8cGFyYW0gbmFtZT0nYW5pbWF0ZV90cmFuc2l0aW9uJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X3N0YXRpY19pbWFnZScgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nZGlzcGxheV9zcGlubmVyJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X292ZXJsYXknIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2Rpc3BsYXlfY291bnQnIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2xhbmd1YWdlJyB2YWx1ZT0nemgtVFcnIC8+DQogIDwvb2JqZWN0Pg0KPC9kaXY+ICAgICAgICAgICAgICAgIA0KDQo8c2NyaXB0IHR5cGU9J3RleHQvamF2YXNjcmlwdCc+ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgZGl2RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd2aXoxNzgyMDAxNDU3MDEyJyk7ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgdml6RWxlbWVudCA9IGRpdkVsZW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ29iamVjdCcpWzBdOyAgICAgICAgICAgICAgICAgICAgDQogICAgICAgIHZpekVsZW1lbnQuc3R5bGUud2lkdGg9JzEwMTZweCc7dml6RWxlbWVudC5zdHlsZS5oZWlnaHQ9Jzk5MXB4JzsgICAgICAgICAgICAgICAgICAgIA0KICAgIHZhciBzY3JpcHRFbGVtZW50ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7ICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgc2NyaXB0RWxlbWVudC5zcmMgPSAnaHR0cHM6Ly9wdWJsaWMudGFibGVhdS5jb20vamF2YXNjcmlwdHMvYXBpL3Zpel92MS5qcyc7ICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgdml6RWxlbWVudC5wYXJlbnROb2RlLmluc2VydEJlZm9yZShzY3JpcHRFbGVtZW50LCB2aXpFbGVtZW50KTsgICAgICAgICAgICAgICAgDQogICAgPC9zY3JpcHQ+DQogICAgICANCjwvdGQ+PC90cj48L3RhYmxlPg0KDQojIyBUYWJsZWF1IFN0b3J5IFBvaW50IDI6IFJlbGF0aW9uc2hpcCBCZXR3ZWVuIENyZWRpdCBTY29yZSBhbmQgTG9hbiBBbW91bnQNCg0KPHRhYmxlPjx0cj48dGQ+DQogICAgDQo8ZGl2IGNsYXNzPSd0YWJsZWF1UGxhY2Vob2xkZXInIGlkPSd2aXoxNzgyMDAxNzI4MDc0JyBzdHlsZT0ncG9zaXRpb246IHJlbGF0aXZlJz4NCg0KPG5vc2NyaXB0Pg0KPGEgaHJlZj0nIyc+PGltZyBhbHQ9J1JlbGF0aW9uc2hpcCBCZXR3ZWVuIENyZWRpdCBTY29yZSBhbmQgTG9hbiBBbW91bnQgJyBzcmM9J2h0dHBzOiYjNDc7JiM0NztwdWJsaWMudGFibGVhdS5jb20mIzQ3O3N0YXRpYyYjNDc7aW1hZ2VzJiM0NztSZSYjNDc7UmVsYXRpb25zaGlwQmV0d2VlbkNyZWRpdFNjb3JlYW5kTG9hbkFtb3VudCYjNDc7UmVsYXRpb25zaGlwQmV0d2VlbkNyZWRpdFNjb3JlYW5kTG9hbkFtb3VudCYjNDc7MV9yc3MucG5nJyBzdHlsZT0nYm9yZGVyOiBub25lJyAvPjwvYT4NCjwvbm9zY3JpcHQ+DQoNCjxvYmplY3QgY2xhc3M9J3RhYmxlYXVWaXonICBzdHlsZT0nZGlzcGxheTpub25lOyc+DQogICAgPHBhcmFtIG5hbWU9J2hvc3RfdXJsJyB2YWx1ZT0naHR0cHMlM0ElMkYlMkZwdWJsaWMudGFibGVhdS5jb20lMkYnIC8+IA0KICAgIDxwYXJhbSBuYW1lPSdlbWJlZF9jb2RlX3ZlcnNpb24nIHZhbHVlPSczJyAvPiA8cGFyYW0gbmFtZT0nc2l0ZV9yb290JyB2YWx1ZT0nJyAvPg0KICAgIDxwYXJhbSBuYW1lPSduYW1lJyB2YWx1ZT0nUmVsYXRpb25zaGlwQmV0d2VlbkNyZWRpdFNjb3JlYW5kTG9hbkFtb3VudCYjNDc7UmVsYXRpb25zaGlwQmV0d2VlbkNyZWRpdFNjb3JlYW5kTG9hbkFtb3VudCcgLz4NCiAgICA8cGFyYW0gbmFtZT0ndGFicycgdmFsdWU9J25vJyAvPg0KICAgIDxwYXJhbSBuYW1lPSd0b29sYmFyJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdzdGF0aWNfaW1hZ2UnIHZhbHVlPSdodHRwczomIzQ3OyYjNDc7cHVibGljLnRhYmxlYXUuY29tJiM0NztzdGF0aWMmIzQ3O2ltYWdlcyYjNDc7UmUmIzQ3O1JlbGF0aW9uc2hpcEJldHdlZW5DcmVkaXRTY29yZWFuZExvYW5BbW91bnQmIzQ3O1JlbGF0aW9uc2hpcEJldHdlZW5DcmVkaXRTY29yZWFuZExvYW5BbW91bnQmIzQ3OzEucG5nJyAvPiANCiAgICA8cGFyYW0gbmFtZT0nYW5pbWF0ZV90cmFuc2l0aW9uJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X3N0YXRpY19pbWFnZScgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nZGlzcGxheV9zcGlubmVyJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X292ZXJsYXknIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2Rpc3BsYXlfY291bnQnIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2xhbmd1YWdlJyB2YWx1ZT0nemgtVFcnIC8+DQogIDwvb2JqZWN0Pg0KPC9kaXY+ICAgICAgICAgICAgICAgIA0KDQo8c2NyaXB0IHR5cGU9J3RleHQvamF2YXNjcmlwdCc+ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgZGl2RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd2aXoxNzgyMDAxNzI4MDc0Jyk7ICAgICAgICAgICAgICAgICAgICANCiAgICB2YXIgdml6RWxlbWVudCA9IGRpdkVsZW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ29iamVjdCcpWzBdOyAgICAgICAgICAgICAgICAgICAgDQogICAgICAgIHZpekVsZW1lbnQuc3R5bGUud2lkdGg9JzEwMTZweCc7dml6RWxlbWVudC5zdHlsZS5oZWlnaHQ9Jzk5MXB4JzsgICAgICAgICAgICAgICAgICAgIA0KICAgIHZhciBzY3JpcHRFbGVtZW50ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7ICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgc2NyaXB0RWxlbWVudC5zcmMgPSAnaHR0cHM6Ly9wdWJsaWMudGFibGVhdS5jb20vamF2YXNjcmlwdHMvYXBpL3Zpel92MS5qcyc7ICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgdml6RWxlbWVudC5wYXJlbnROb2RlLmluc2VydEJlZm9yZShzY3JpcHRFbGVtZW50LCB2aXpFbGVtZW50KTsgICAgICAgICAgICAgICAgDQogICAgPC9zY3JpcHQ+DQogICAgDQo8L3RkPjwvdHI+PC90YWJsZT4NCg0KIyMgVGFibGVhdSBTdG9yeSBQb2ludCAzOiBNYXJpdGFsIFN0YXR1cyBhbmQgRGVmYXVsdCBSaXNrDQoNCjx0YWJsZT48dHI+PHRkPg0KICAgIA0KPGRpdiBjbGFzcz0ndGFibGVhdVBsYWNlaG9sZGVyJyBpZD0ndml6MTc4MjAwMTg3MjM0Micgc3R5bGU9J3Bvc2l0aW9uOiByZWxhdGl2ZSc+DQoNCjxub3NjcmlwdD48YSBocmVmPScjJz48aW1nIGFsdD0nTWFyaXRhbCBTdGF0dXMgYW5kIERlZmF1bHQgUmlzayAnIHNyYz0naHR0cHM6JiM0NzsmIzQ3O3B1YmxpYy50YWJsZWF1LmNvbSYjNDc7c3RhdGljJiM0NztpbWFnZXMmIzQ3O01hJiM0NztNYXJpdGFsU3RhdHVzYW5kRGVmYXVsdFJpc2smIzQ3O01hcml0YWxTdGF0dXNhbmREZWZhdWx0UmlzayYjNDc7MV9yc3MucG5nJyBzdHlsZT0nYm9yZGVyOiBub25lJyAvPjwvYT4NCjwvbm9zY3JpcHQ+DQoNCjxvYmplY3QgY2xhc3M9J3RhYmxlYXVWaXonICBzdHlsZT0nZGlzcGxheTpub25lOyc+DQogICAgPHBhcmFtIG5hbWU9J2hvc3RfdXJsJyB2YWx1ZT0naHR0cHMlM0ElMkYlMkZwdWJsaWMudGFibGVhdS5jb20lMkYnIC8+IA0KICAgIDxwYXJhbSBuYW1lPSdlbWJlZF9jb2RlX3ZlcnNpb24nIHZhbHVlPSczJyAvPiANCiAgICA8cGFyYW0gbmFtZT0nc2l0ZV9yb290JyB2YWx1ZT0nJyAvPg0KICAgIDxwYXJhbSBuYW1lPSduYW1lJyB2YWx1ZT0nTWFyaXRhbFN0YXR1c2FuZERlZmF1bHRSaXNrJiM0NztNYXJpdGFsU3RhdHVzYW5kRGVmYXVsdFJpc2snIC8+DQogICAgPHBhcmFtIG5hbWU9J3RhYnMnIHZhbHVlPSdubycgLz4NCiAgICA8cGFyYW0gbmFtZT0ndG9vbGJhcicgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nc3RhdGljX2ltYWdlJyB2YWx1ZT0naHR0cHM6JiM0NzsmIzQ3O3B1YmxpYy50YWJsZWF1LmNvbSYjNDc7c3RhdGljJiM0NztpbWFnZXMmIzQ3O01hJiM0NztNYXJpdGFsU3RhdHVzYW5kRGVmYXVsdFJpc2smIzQ3O01hcml0YWxTdGF0dXNhbmREZWZhdWx0UmlzayYjNDc7MS5wbmcnIC8+IA0KICAgIDxwYXJhbSBuYW1lPSdhbmltYXRlX3RyYW5zaXRpb24nIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2Rpc3BsYXlfc3RhdGljX2ltYWdlJyB2YWx1ZT0neWVzJyAvPg0KICAgIDxwYXJhbSBuYW1lPSdkaXNwbGF5X3NwaW5uZXInIHZhbHVlPSd5ZXMnIC8+DQogICAgPHBhcmFtIG5hbWU9J2Rpc3BsYXlfb3ZlcmxheScgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nZGlzcGxheV9jb3VudCcgdmFsdWU9J3llcycgLz4NCiAgICA8cGFyYW0gbmFtZT0nbGFuZ3VhZ2UnIHZhbHVlPSd6aC1UVycgLz4NCiAgPC9vYmplY3Q+DQo8L2Rpdj4gICAgICAgICAgICAgICAgDQoNCjxzY3JpcHQgdHlwZT0ndGV4dC9qYXZhc2NyaXB0Jz4gICAgICAgICAgICAgICAgICAgIA0KICAgIHZhciBkaXZFbGVtZW50ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3ZpejE3ODIwMDE4NzIzNDInKTsgICAgICAgICAgICAgICAgICAgIA0KICAgIHZhciB2aXpFbGVtZW50ID0gZGl2RWxlbWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnb2JqZWN0JylbMF07ICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgdml6RWxlbWVudC5zdHlsZS53aWR0aD0nMTAxNnB4Jzt2aXpFbGVtZW50LnN0eWxlLmhlaWdodD0nOTkxcHgnOyAgICAgICAgICAgICAgICAgICAgDQogICAgdmFyIHNjcmlwdEVsZW1lbnQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICBzY3JpcHRFbGVtZW50LnNyYyA9ICdodHRwczovL3B1YmxpYy50YWJsZWF1LmNvbS9qYXZhc2NyaXB0cy9hcGkvdml6X3YxLmpzJzsgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICB2aXpFbGVtZW50LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKHNjcmlwdEVsZW1lbnQsIHZpekVsZW1lbnQpOyAgICAgICAgICAgICAgICANCiAgICA8L3NjcmlwdD4NCiAgICANCjwvdGQ+PC90cj48L3RhYmxlPg0KDQoNCiMgS2V5IEZpbmRpbmdzDQoNClRoZSBkYXNoYm9hcmQgc3VnZ2VzdHMgdGhhdCBjcmVkaXQgc2NvcmUgaXMgc3Ryb25nbHkgYXNzb2NpYXRlZCB3aXRoIGxvYW4gZGVmYXVsdCByaXNrLiBCb3Jyb3dlcnMgd2l0aCBsb3cgY3JlZGl0IHNjb3JlcyBoYXZlIGEgbXVjaCBoaWdoZXIgZGVmYXVsdCByYXRlIHRoYW4gYm9ycm93ZXJzIHdpdGggbWVkaXVtIG9yIGhpZ2ggY3JlZGl0IHNjb3Jlcy4gU2luZ2xlIGJvcnJvd2VycyBhbHNvIHNob3cgYSBoaWdoZXIgZGVmYXVsdCByYXRlIHRoYW4gbWFycmllZCBib3Jyb3dlcnMuIEluIGFkZGl0aW9uLCBwZXJzb25hbCBsb2FucyBhcmUgdGhlIG1vc3QgY29tbW9uIGxvYW4gdHlwZSBpbiB0aGUgZGF0YXNldC4NCg0KIyBSZWNvbW1lbmRhdGlvbnMNCg0KQmFzZWQgb24gdGhlIGRhc2hib2FyZCBhbmFseXNpcywgY3JlZGl0IHNjb3JlIGFwcGVhcnMgdG8gYmUgdGhlIHN0cm9uZ2VzdCBwcmVkaWN0b3Igb2YgbG9hbiBkZWZhdWx0IHJpc2suIEJvcnJvd2VycyBpbiB0aGUgbG93IGNyZWRpdCBzY29yZSBncm91cCBleGhpYml0IGEgc3Vic3RhbnRpYWxseSBoaWdoZXIgZGVmYXVsdCByYXRlICg5MS4wJSkgY29tcGFyZWQgd2l0aCBtZWRpdW0gKDQ2LjAlKSBhbmQgaGlnaCBjcmVkaXQgc2NvcmUgYm9ycm93ZXJzICgxNC40JSkuIFRoZXJlZm9yZSwgZmluYW5jaWFsIGluc3RpdHV0aW9ucyBzaG91bGQgcHJpb3JpdGl6ZSBjcmVkaXQgc2NvcmUgYXMgYSBrZXkgZmFjdG9yIGR1cmluZyB0aGUgbG9hbiBhcHByb3ZhbCBhbmQgcmlzayBhc3Nlc3NtZW50IHByb2Nlc3MuDQoNCkZvciBib3Jyb3dlcnMgd2l0aCBsb3cgY3JlZGl0IHNjb3JlcywgbGVuZGVycyBtYXkgY29uc2lkZXIgaW1wbGVtZW50aW5nIHN0cmljdGVyIGxlbmRpbmcgcmVxdWlyZW1lbnRzLCBzdWNoIGFzIGxvd2VyIGxvYW4gbGltaXRzLCBoaWdoZXIgY29sbGF0ZXJhbCByZXF1aXJlbWVudHMsIG9yIGVuaGFuY2VkIGNyZWRpdCB2ZXJpZmljYXRpb24gcHJvY2VkdXJlcy4gQWRkaXRpb25hbCBtb25pdG9yaW5nIGFuZCBmaW5hbmNpYWwgY291bnNlbGluZyBwcm9ncmFtcyBtYXkgYWxzbyBoZWxwIHJlZHVjZSB0aGUgbGlrZWxpaG9vZCBvZiBkZWZhdWx0IGFtb25nIGhpZ2gtcmlzayBib3Jyb3dlcnMuDQoNClRoZSBhbmFseXNpcyBhbHNvIGluZGljYXRlcyB0aGF0IHNpbmdsZSBib3Jyb3dlcnMgaGF2ZSBhIGhpZ2hlciBkZWZhdWx0IHJhdGUgKDM0LjElKSB0aGFuIG1hcnJpZWQgYm9ycm93ZXJzICgyNi42JSkuIFdoaWxlIG1hcml0YWwgc3RhdHVzIGFsb25lIHNob3VsZCBub3QgZGV0ZXJtaW5lIGxlbmRpbmcgZGVjaXNpb25zLCBpdCBtYXkgcHJvdmlkZSB1c2VmdWwgY29udGV4dCB3aGVuIGNvbWJpbmVkIHdpdGggb3RoZXIgcmlzayBpbmRpY2F0b3JzLiBMZW5kZXJzIGNvdWxkIGluY29ycG9yYXRlIGRlbW9ncmFwaGljIGFuZCBiZWhhdmlvcmFsIGZhY3RvcnMgaW50byBhIGJyb2FkZXIgcmlzayBhc3Nlc3NtZW50IGZyYW1ld29yayB0byBpbXByb3ZlIHByZWRpY3RpdmUgYWNjdXJhY3kuDQoNCkluIGFkZGl0aW9uLCBwZXJzb25hbCBsb2FucyByZXByZXNlbnQgdGhlIGxhcmdlc3QgbG9hbiBjYXRlZ29yeSBpbiB0aGUgZGF0YXNldC4gRmluYW5jaWFsIGluc3RpdHV0aW9ucyBzaG91bGQgcGF5IHBhcnRpY3VsYXIgYXR0ZW50aW9uIHRvIHBlcnNvbmFsIGxvYW4gcG9ydGZvbGlvcyBhbmQgcmVndWxhcmx5IG1vbml0b3IgYm9ycm93ZXIgcmVwYXltZW50IGJlaGF2aW9yIHRvIGlkZW50aWZ5IHBvdGVudGlhbCByaXNrcyBlYXJseS4NCg0KSW4gY29uY2x1c2lvbiwgbGVuZGVycyBzaG91bGQgYWRvcHQgYSBjb21wcmVoZW5zaXZlIHJpc2sgbWFuYWdlbWVudCBzdHJhdGVneSB0aGF0IGNvbWJpbmVzIGNyZWRpdCBzY29yZSwgYm9ycm93ZXIgY2hhcmFjdGVyaXN0aWNzLCBhbmQgbG9hbiBhdHRyaWJ1dGVzIHRvIGltcHJvdmUgbG9hbiBwZXJmb3JtYW5jZSBhbmQgcmVkdWNlIGRlZmF1bHQgcmlzay4NCg0KIyBMaW1pdGF0aW9ucw0KDQpTZXZlcmFsIGxpbWl0YXRpb25zIHNob3VsZCBiZSBjb25zaWRlcmVkIHdoZW4gaW50ZXJwcmV0aW5nIHRoZSByZXN1bHRzLiBGaXJzdCwgdGhlIGRhdGFzZXQgY29udGFpbnMgb25seSBhIGxpbWl0ZWQgc2V0IG9mIGJvcnJvd2VyIGNoYXJhY3RlcmlzdGljcywgYW5kIG90aGVyIHBvdGVudGlhbGx5IGltcG9ydGFudCBmYWN0b3JzIHN1Y2ggYXMgaW5jb21lLCBlbXBsb3ltZW50IHN0YWJpbGl0eSwgZGVidC10by1pbmNvbWUgcmF0aW8sIGFuZCByZXBheW1lbnQgaGlzdG9yeSBhcmUgbm90IGF2YWlsYWJsZS4gU2Vjb25kLCB0aGUgYW5hbHlzaXMgaXMgZXhwbG9yYXRvcnkgYW5kIGRvZXMgbm90IGVzdGFibGlzaCBjYXVzYWwgcmVsYXRpb25zaGlwcyBiZXR3ZWVuIGJvcnJvd2VyIGNoYXJhY3RlcmlzdGljcyBhbmQgbG9hbiBkZWZhdWx0IGJlaGF2aW9yLiBGaW5hbGx5LCB0aGUgZmluZGluZ3MgYXJlIGJhc2VkIG9uIGEgc2luZ2xlIGRhdGFzZXQgYW5kIG1heSBub3QgZ2VuZXJhbGl6ZSB0byBhbGwgbGVuZGluZyBlbnZpcm9ubWVudHMgb3IgYm9ycm93ZXIgcG9wdWxhdGlvbnMuDQoNCkZ1dHVyZSBzdHVkaWVzIGNvdWxkIGluY29ycG9yYXRlIGFkZGl0aW9uYWwgZmluYW5jaWFsIHZhcmlhYmxlcyBhbmQgcHJlZGljdGl2ZSBtb2RlbGluZyB0ZWNobmlxdWVzIHRvIGltcHJvdmUgdGhlIHVuZGVyc3RhbmRpbmcgb2YgbG9hbiBkZWZhdWx0IHJpc2sgYW5kIHN1cHBvcnQgbW9yZSBhY2N1cmF0ZSBsZW5kaW5nIGRlY2lzaW9ucy4NCg0KIyBDb25jbHVzaW9uDQoNClRoaXMgVGFibGVhdSBkYXNoYm9hcmQgYW5kIHN0b3J5IHBvaW50IGRlbW9uc3RyYXRlIGhvdyBpbnRlcmFjdGl2ZSBkYXRhIHZpc3VhbGl6YXRpb24gY2FuIHN1cHBvcnQgbG9hbiBkZWZhdWx0IHJpc2sgYW5hbHlzaXMuIFRoZSByZXN1bHRzIHN1Z2dlc3QgdGhhdCBjcmVkaXQgc2NvcmUgaXMgYW4gaW1wb3J0YW50IGZhY3RvciBpbiBpZGVudGlmeWluZyBkZWZhdWx0IHJpc2ssIHdoaWxlIGJvcnJvd2VyIGNoYXJhY3RlcmlzdGljcyBzdWNoIGFzIG1hcml0YWwgc3RhdHVzIGFuZCBsb2FuIHR5cGUgcHJvdmlkZSBhZGRpdGlvbmFsIGNvbnRleHQgZm9yIHVuZGVyc3RhbmRpbmcgcmVwYXltZW50IGJlaGF2aW9yLg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Loan Default Risk.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
